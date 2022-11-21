@@ -4,6 +4,7 @@ Script to create PNG format image, using 36 discretized views
 at each viewpoint in 30 degree increments
 '''
 
+import MatterSim
 import math
 import os
 import sys
@@ -13,15 +14,15 @@ import json
 
 # Caffe and MatterSim need to be on the Python path
 sys.path.append("Matterport3DSimulator/build")
-import MatterSim
 
 # Number of discretized views from one viewpoint
 VIEWPOINT_SIZE = 36
 
 # Simulator image parameters
-WIDTH=640
-HEIGHT=480
-VFOV=60
+WIDTH = 640
+HEIGHT = 480
+VFOV = 60
+
 
 def create_image(scanId, viewpointId, dir):
     """
@@ -82,7 +83,6 @@ def create_image(scanId, viewpointId, dir):
         os.makedirs(json_dir)
     with open(os.path.join(json_dir, "{}_{}_state.json".format(scanId, viewpointId)), 'w') as f:
         json.dump(state_list, f)
-
 
 
 if __name__ == "__main__":

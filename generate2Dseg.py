@@ -9,25 +9,6 @@ from tqdm import tqdm
 import ply_load
 
 
-def rotate_view_0(vis, start_ex):
-    ctr = vis.get_view_control()
-    camera_params = ctr.convert_to_pinhole_camera_parameters()
-    vis.update_renderer()
-    rot = np.eye(4)
-    rot[:3, :3] = R.from_euler('xyz', [0, 90, 90], degrees=True).as_dcm()
-    rot = rot.dot(start_ex)
-    rot_y = np.eye(4)
-    rot_y[:3, :3] = R.from_euler('y', -90, degrees=True).as_dcm()
-    rot = rot_y.dot(rot)
-    rot_x = np.eye(4)
-    rot_x[:3, :3] = R.from_euler('x', 0, degrees=True).as_dcm()
-    rot = rot_x.dot(rot)
-    camera_params.extrinsic = rot
-    ctr.convert_from_pinhole_camera_parameters(camera_params)
-    vis.update_renderer()
-    return True
-
-
 def rotate_view(vis, start_ex, heading, elevation):
     ctr = vis.get_view_control()
     camera_params = ctr.convert_to_pinhole_camera_parameters()
@@ -50,8 +31,7 @@ def rotate_view(vis, start_ex, heading, elevation):
     return True
 
 
-def main(scan_id, view_point_id, heading, elevation, view_index, location, mesh):
-
+def save_2d_seg(scan_id, view_point_id, heading, elevation, view_index, location, mesh):
     vis = o3d.visualization.Visualizer()
     vis.create_window(width=1280, height=1024)
     vis.add_geometry(mesh)
@@ -59,9 +39,9 @@ def main(scan_id, view_point_id, heading, elevation, view_index, location, mesh)
     view_control = vis.get_view_control()
 
     trans = np.array([[1, 0.000000, 0.000000, 0],
-                    [0.000000, -1, 0.000000, 0],
-                    [0.000000, 0.000000, -1, 0],
-                    [0.000000, 0.000000, 0.000000, 1.000000]])
+                      [0.000000, -1, 0.000000, 0],
+                      [0.000000, 0.000000, -1, 0],
+                      [0.000000, 0.000000, 0.000000, 1.000000]])
 
     trans[:, -1] = [location['x'], location['y'], location['z'], 1]
 
@@ -73,23 +53,14 @@ def main(scan_id, view_point_id, heading, elevation, view_index, location, mesh)
     # camera_params.intrinsic.set_intrinsics(1280, 1024, 1076.33, 1076.54, 639.5, 511.5)
     # view_control.convert_from_pinhole_camera_parameters(camera_params)
 
-    start_ex = camera_params.extrinsic
-
     camera_params.extrinsic = trans
-
     rotate_view(vis, trans, heading, elevation)
-
     vis.update_renderer()
 
     camera_params = view_control.convert_to_pinhole_camera_parameters()
-
     pinhole_parameters = view_control.convert_to_pinhole_camera_parameters()
-
     view_control.convert_from_pinhole_camera_parameters(pinhole_parameters)
-
     output_image = vis.capture_screen_float_buffer(True)
-
-    # vis.run()
 
     # resize image -> (640, 480)
     output_image = np.asarray(output_image)
@@ -101,11 +72,10 @@ def main(scan_id, view_point_id, heading, elevation, view_index, location, mesh)
         os.makedirs(output_dir)
 
     output_path = os.path.join(output_dir, f"{scan_id}_{view_point_id}_{str(view_index).zfill(2)}.png")
-
     plt.imsave(output_path, np.asarray(output_image), dpi=1)
 
 
-if __name__ == "__main__":
+def main():
     # get region id
     with open("../../../MP3D_sim/ids.json", "r") as f:
         ids = json.load(f)
@@ -163,4 +133,8 @@ if __name__ == "__main__":
                 location['y'] = data[i]['location']['y']
                 location['z'] = data[i]['location']['z']
 
-                main(scan_id, view_point_id, heading, elevation, view_index, location, mesh)
+                save_2d_seg(scan_id, view_point_id, heading, elevation, view_index, location, mesh)
+
+
+if __name__ == "__main__":
+    main()
