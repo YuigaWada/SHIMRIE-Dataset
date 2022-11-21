@@ -18,4 +18,9 @@ do
             python3 create_image.py $scanId $viewId data/panorama
             echo "... done"
     done
+    echo "update ids.json"
+    echo $viewIds | uniq | tr "\n" " " > .tmp
+    python3 create_json.py ids.json $scanId
+    rm .tmp
+    echo "... done"
 done
