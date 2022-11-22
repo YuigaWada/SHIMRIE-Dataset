@@ -2,11 +2,14 @@
 
 Matterport3DSemSeg is a tool to create semantic segmentation masks from Matterport3D.
 
+<img src="https://user-images.githubusercontent.com/51681991/203298744-0ef069d4-aca8-47e1-8593-2cb09833ac61.jpg" style="width: 45%"><img src="https://user-images.githubusercontent.com/51681991/203298762-f530b9ea-9e04-4138-abe8-499ac8f02d50.png" style="width: 45%">
+
+
 ## Prerequisites
 
 - Install [docker](https://docs.docker.com/engine/installation/)
 - Install [nvidia-docker2.0](https://github.com/nvidia/nvidia-docker/wiki/Installation-(version-2.0))
-- [Matterport3DSimulator](https://github.com/peteanderson80/Matterport3DSimulator
+- [Matterport3DSimulator](https://github.com/peteanderson80/Matterport3DSimulator)
   - Follow the instructions in the Matterport3DSimulator and go from ["Clone Repo"](https://github.com/peteanderson80/Matterport3DSimulator#clone-repo) to ["Dataset Preprocessing"](https://github.com/peteanderson80/Matterport3DSimulator#dataset-preprocessing).
 
 
