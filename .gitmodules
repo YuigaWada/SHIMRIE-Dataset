@@ -1,0 +1,3 @@
+[submodule "Matterport3DSimulator"]
+	path = Matterport3DSimulator
+	url = git@github.com:peteanderson80/Matterport3DSimulator.git
