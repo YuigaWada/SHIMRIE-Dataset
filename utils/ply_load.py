@@ -4,7 +4,7 @@ import json
 from tqdm import tqdm
 
 
-def main(ply_path, colors, sem_seg_path, f_segs_path, out_path):
+def load(ply_path, colors, sem_seg_path, f_segs_path, out_path):
     mesh = o3d.io.read_triangle_mesh(ply_path)
     pcd = o3d.io.read_point_cloud(ply_path)
     zeros = np.zeros_like(np.asarray(pcd.points))
@@ -55,15 +55,3 @@ def main(ply_path, colors, sem_seg_path, f_segs_path, out_path):
 
     return pcd, mesh
 
-
-if __name__ == "__main__":
-    ply_path = "./region_segmentations/region36.ply"
-    sem_seg_path = "./region_segmentations/region36.semseg.json"
-    f_segs_path = "./region_segmentations/region36.fsegs.json"
-    out_path = "./region_segmentations/region36_color.ply"
-    with open('./object_colors.json') as color_file:
-        color_data = json.load(color_file)
-    colors = np.array(color_data['colors'])
-    pcd, mesh = main(ply_path, colors, sem_seg_path, f_segs_path, out_path)
-    # o3d.visualization.draw_geometries([pcd])
-    # o3d.visualization.draw_geometries([mesh])
