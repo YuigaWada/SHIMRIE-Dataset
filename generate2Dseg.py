@@ -86,9 +86,10 @@ def main():
     with open(args.ids, "r") as f:
         ids = json.load(f)
 
-    for idx in tqdm(range(len(ids))):
+    for idx in range(len(ids)):
+        print(f"> process {idx+1} / {len(ids)} ...")
         scan_id = ids[idx]["scan_id"]
-        for view_point_id in ids[idx]["viewpoint_ids"]:
+        for view_point_id in tqdm(ids[idx]["viewpoint_ids"]):
             json_file = f"{scan_id}_{view_point_id}_state.json"
 
             if not os.path.exists(os.path.join(args.states, json_file)):
@@ -127,7 +128,7 @@ def main():
                 mesh = o3d.io.read_triangle_mesh(out_path)
 
             # camera position
-            for i in tqdm(range(len(data))):
+            for i in range(len(data)):
                 scan_id = data[i]['scanId']
                 view_point_id = data[i]['viewpointId']
                 heading = data[i]['heading'] * (-1)
