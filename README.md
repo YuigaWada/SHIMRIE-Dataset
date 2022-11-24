@@ -2,7 +2,7 @@
 
 Matterport3DSemSeg is a tool to create semantic segmentation masks from Matterport3D.
 
-<img src="https://user-images.githubusercontent.com/51681991/203298744-0ef069d4-aca8-47e1-8593-2cb09833ac61.jpg" style="width: 45%"><img src="https://user-images.githubusercontent.com/51681991/203298762-f530b9ea-9e04-4138-abe8-499ac8f02d50.png" style="width: 45%">
+<img src="https://user-images.githubusercontent.com/51681991/203675177-a3eef418-f447-4180-98a9-e14a35fa6011.png" style="width: 45%"><img src="https://user-images.githubusercontent.com/51681991/203675186-90832c59-e0cd-4587-af20-29232691fb5a.png" style="width: 45%">
 
 
 ## Prerequisites
